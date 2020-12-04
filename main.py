@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from waitress import serve
+from random import randint
 
 app = Flask(__name__)
 
@@ -13,8 +14,27 @@ def home_page():
     return render_template("home_page.html")
 
 
+# private key
+def gerarSequenciaSuperCrescimento():
+    potencia, sequencia = 0, []
+
+    while len(sequencia) != 10:
+        num = randint(0, 9*pow(10, potencia))
+
+        s = sum(sequencia)
+        if num <= s:
+            potencia = potencia + 1
+            continue
+
+        sequencia.append(num)
+
+    return sequencia
+
+
 @app.route('/result/<text>', methods=["GET", "POST"])
 def result(text):
+    privateKey = gerarSequenciaSuperCrescimento()
+
     return render_template("result.html", data=text)
 
 
