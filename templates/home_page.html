@@ -4,10 +4,48 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
-    
-    <style></style>
 
+    <style>
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #002776;
+            text-align: center;
+        }
+
+        h2 {
+            color: gray;
+            text-align: center;
+            padding-bottom: 1%;
+        }
+
+        .form-inline {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
+    <img src="{{ url_for('static', filename='logo.png') }}" width="170" height="200" />
 
+    <h1 class="title"><b>Krypt</b></h1>
+    <h2 class="subtitle">Criptografia com Knapsack</h2>
+
+    <form class="form-inline" method="POST" action="{{ url_for('home_page') }}">
+        <div class="form-group">
+            <div class="input-group">
+                <textarea class="form-control" id="text" cols="120" rows="12" placeholder="Insira algum texto"></textarea>
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-success btn-lg"><b>CRIPTOGRAFAR</b></button>
+    </form>
 </body>
