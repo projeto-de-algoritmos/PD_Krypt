@@ -1,27 +1,12 @@
-**!! Atenção: Renomeie o seu repositório para (Tema)_(NomeDoProjeto). !!** 
+# Krypt
 
-Temas:
- - Grafos1
- - Grafos2
- - PD
- - D&C
- - Greed
- - Final 
- 
- **!! *Não coloque os nomes dos alunos no título do repositório*. Exemplo de título correto: Grafos2_Labirinto-do-Minotauro !!**
- 
- (Apague essa seção)
-
-# NomedoProjeto
-
-**Número da Lista**: X<br>
-**Conteúdo da Disciplina**: XXXXXXXXXX<br>
+**Número da Lista**: 5<br>
+**Conteúdo da Disciplina**: PD<br>
 
 ## Alunos
-|Matrícula | Aluno |
+| Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 17/0013812 | [Matheus Rodrigues](https://github.com/rjoao) |
 
 ## Sobre 
 O objetivo do trabalho é demonstrar como era utilizado o algoritmo de Knapsack na criptografia de chave pública, também conhecida como criptografia assimétrica. 
@@ -36,13 +21,13 @@ A chave privada, sequência de super crescimento, o módulo e o multiplicador s�
 ## Screenshots
 
 ### Página Inicial
-![Página Inicial](./static/pagina_inicial.png)
+![Página Inicial](./static/s_pagina_inicial.png)
 
 ### Página Resultado
-![Página Resultado](./static/screenshot_result.png)
+![Página Resultado](./static/s_pagina_resultados_1.png)
 
 ### Banco de Dados
-![Banco de Dados](./static/screenshot_database.png)
+![Banco de Dados](./static/s_pagina_resultados.png)
 
 ## Vídeo
 ![Vídeo](./static/video.gif)
