@@ -13,7 +13,7 @@ O objetivo do trabalho é demonstrar como era utilizado o algoritmo de Knapsack 
 
 A chave privada, sequência de super crescimento, o módulo e o multiplicador são gerados aleatoriamente a cada execução do processo de criptografia. O módulo e o multiplicador são utilizados na geração da chave pública.
 
-É possível separa o projeto em:
+É possível separar o projeto em:
  - Execução do Projeto
     - Adição do Texto
     - Visualização dos Resultados
@@ -60,11 +60,3 @@ make install
 ```
 make run
 ```
-
-
-## Outros 
-
-
-
-
-
