@@ -31,9 +31,29 @@ def gerarSequenciaSuperCrescimento():
     return sequencia
 
 
+def gerarDadosPublicKey(privateKey):
+    mod = privateKey.pop()
+    mult = privateKey.pop()
+
+    while mod != 1 and mult != 1 and math.gcd(mod, mult) != 1:
+        mult = randint(0, mult)
+
+    publicKey = []
+    for i in privateKey:
+        publicKey.append((i * mult) % mod)
+
+    return (mult, mod, publicKey)
+
+
 @app.route('/result/<text>', methods=["GET", "POST"])
 def result(text):
     privateKey = gerarSequenciaSuperCrescimento()
+
+    dadosPublicKey = gerarDadosPublicKey(privateKey)
+
+    multiplicador = dadosPublicKey[0]
+    modulo = dadosPublicKey[1]
+    publicKey = dadosPublicKey[2]
 
     return render_template("result.html", data=text)
 
