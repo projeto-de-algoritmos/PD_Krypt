@@ -2,16 +2,18 @@ from flask import Flask, render_template, request, redirect, url_for
 from waitress import serve
 from random import randint
 
+import math
+
 app = Flask(__name__)
 
 
 @app.route('/', methods=["GET", "POST"])
 def home_page():
-    text = request.form.get("text")
-    if text:
-        return redirect(url_for('result', text=text))
+    texto = request.form.get("texto")
+    if texto:
+        return redirect(url_for('resultados', text=texto))
 
-    return render_template("home_page.html")
+    return render_template("pagina_principal.html")
 
 
 # private key
@@ -45,7 +47,31 @@ def gerarDadosPublicKey(privateKey):
     return (mult, mod, publicKey)
 
 
-@app.route('/result/<text>', methods=["GET", "POST"])
+def codificarMensagem(publicKey, mensagem):
+    mensagemBinaria = mensagem.encode("utf8")
+
+    mensagemCriptografada = []
+    for byte in mensagemBinaria:
+        codigo = format(byte, '#010b')[2:]
+
+        posicao = 0
+        while posicao < 8:
+            if not posicao:
+                mensagemCriptografada.append(0)
+            if codigo[posicao] == '1':
+                posicaoSendoCifrada = len(mensagemCriptografada) - 1
+
+                codigoCifrado = mensagemCriptografada[posicaoSendoCifrada]
+                novoCodigoCifrado = codigoCifrado + publicKey[posicao]
+
+                mensagemCriptografada[posicaoSendoCifrada] = novoCodigoCifrado
+
+            posicao = posicao + 1
+
+    return mensagemCriptografada
+
+
+@app.route('/resultados/<texto>', methods=["GET", "POST"])
 def result(text):
     privateKey = gerarSequenciaSuperCrescimento()
 
@@ -54,6 +80,8 @@ def result(text):
     multiplicador = dadosPublicKey[0]
     modulo = dadosPublicKey[1]
     publicKey = dadosPublicKey[2]
+
+    mensagemCriptografada = codificarMensagem(publicKey, texto)
 
     return render_template("result.html", data=text)
 
