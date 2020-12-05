@@ -24,10 +24,30 @@ Temas:
 | xx/xxxxxx  |  xxxx xxxx xxxxx |
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+O objetivo do trabalho é demonstrar como era utilizado o algoritmo de Knapsack na criptografia de chave pública, também conhecida como criptografia assimétrica. 
+
+A chave privada, sequência de super crescimento, o módulo e o multiplicador são gerados aleatoriamente a cada execução do processo de criptografia. O módulo e o multiplicador são utilizados na geração da chave pública.
+
+É possível separa o projeto em:
+ - Execução do Projeto
+    - Adição do Texto
+    - Visualização dos Resultados
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+
+### Página Inicial
+![Página Inicial](./static/pagina_inicial.png)
+
+### Página Resultado
+![Página Resultado](./static/screenshot_result.png)
+
+### Banco de Dados
+![Banco de Dados](./static/screenshot_database.png)
+
+## Vídeo
+![Vídeo](./static/video.gif)
+
+**[Video MP4](./static/video.mp4)**
 
 ## Instalação 
 **Linguagem**: Python3<br>
