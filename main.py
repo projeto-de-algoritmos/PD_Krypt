@@ -136,7 +136,6 @@ def resultados(texto):
             "Chave Privada": privateKey,
             "Texto Descriptografado": textoDescriptografado
         }
-        
     )
 
 
