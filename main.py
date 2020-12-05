@@ -8,10 +8,10 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=["GET", "POST"])
-def home_page():
+def pagina_principal():
     texto = request.form.get("texto")
     if texto:
-        return redirect(url_for('resultados', text=texto))
+        return redirect(url_for('resultados', texto=texto))
 
     return render_template("pagina_principal.html")
 
@@ -71,8 +71,45 @@ def codificarTexto(publicKey, texto):
     return textoCriptografado
 
 
+def knapsack(codigo, privateKey):
+    if codigo == 0:
+        return '00000000'
+
+    reversePrivateKey = privateKey.copy()
+    reversePrivateKey.reverse()
+
+    print(codigo, reversePrivateKey)
+
+    binarioDecodificado = ''
+    for componenteChave in reversePrivateKey:
+        if componenteChave <= codigo:
+            binarioDecodificado = str(1) + binarioDecodificado
+            codigo = codigo - componenteChave
+        else:
+            binarioDecodificado = str(0) + binarioDecodificado
+
+    return binarioDecodificado
+
+
+def decodificarMensagem(mensagem, privateKey, multiplicador, modulo):
+    inversoMultiplicativoModular = pow(multiplicador, -1, modulo)
+
+    print(mensagem)
+    print(privateKey)
+
+    binarios = []
+    for codigo in mensagem:
+        binario = knapsack(
+            (codigo * inversoMultiplicativoModular) % modulo, privateKey
+        )
+
+        binarios.append(int(binario, 2))
+
+    return bytes(binarios).decode("utf8")
+
+
 @app.route('/resultados/<texto>', methods=["GET", "POST"])
-def result(texto):
+def resultados(texto):
     privateKey = gerarSequenciaSuperCrescimento()
 
     dadosPublicKey = gerarDadosPublicKey(privateKey)
@@ -86,10 +123,16 @@ def result(texto):
     componentesTextoCriptografado = []
     for componente in textoCriptografado:
         componentesTextoCriptografado.append(componente % 256)
-        
+
     print(bytes(componentesTextoCriptografado).decode("utf8", "replace"))
 
-    return render_template("result.html", data=texto)
+    textoDescriptografado = decodificarMensagem(
+        textoCriptografado, privateKey, multiplicador, modulo
+    )
+
+    print(textoDescriptografado)
+
+    return render_template("resultados.html", data=textoDescriptografado)
 
 
 if __name__ == '__main__':
