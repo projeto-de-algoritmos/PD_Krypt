@@ -47,32 +47,32 @@ def gerarDadosPublicKey(privateKey):
     return (mult, mod, publicKey)
 
 
-def codificarMensagem(publicKey, mensagem):
-    mensagemBinaria = mensagem.encode("utf8")
+def codificarTexto(publicKey, texto):
+    textoBinario = texto.encode("utf8")
 
-    mensagemCriptografada = []
-    for byte in mensagemBinaria:
+    textoCriptografado = []
+    for byte in textoBinario:
         codigo = format(byte, '#010b')[2:]
 
         posicao = 0
         while posicao < 8:
             if not posicao:
-                mensagemCriptografada.append(0)
+                textoCriptografado.append(0)
             if codigo[posicao] == '1':
-                posicaoSendoCifrada = len(mensagemCriptografada) - 1
+                posicaoSendoCifrada = len(textoCriptografado) - 1
 
-                codigoCifrado = mensagemCriptografada[posicaoSendoCifrada]
+                codigoCifrado = textoCriptografado[posicaoSendoCifrada]
                 novoCodigoCifrado = codigoCifrado + publicKey[posicao]
 
-                mensagemCriptografada[posicaoSendoCifrada] = novoCodigoCifrado
+                textoCriptografado[posicaoSendoCifrada] = novoCodigoCifrado
 
             posicao = posicao + 1
 
-    return mensagemCriptografada
+    return textoCriptografado
 
 
 @app.route('/resultados/<texto>', methods=["GET", "POST"])
-def result(text):
+def result(texto):
     privateKey = gerarSequenciaSuperCrescimento()
 
     dadosPublicKey = gerarDadosPublicKey(privateKey)
@@ -81,9 +81,15 @@ def result(text):
     modulo = dadosPublicKey[1]
     publicKey = dadosPublicKey[2]
 
-    mensagemCriptografada = codificarMensagem(publicKey, texto)
+    textoCriptografado = codificarTexto(publicKey, texto)
 
-    return render_template("result.html", data=text)
+    componentesTextoCriptografado = []
+    for componente in textoCriptografado:
+        componentesTextoCriptografado.append(componente % 256)
+        
+    print(bytes(componentesTextoCriptografado).decode("utf8", "replace"))
+
+    return render_template("result.html", data=texto)
 
 
 if __name__ == '__main__':
