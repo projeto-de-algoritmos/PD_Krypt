@@ -78,8 +78,6 @@ def knapsack(codigo, privateKey):
     reversePrivateKey = privateKey.copy()
     reversePrivateKey.reverse()
 
-    print(codigo, reversePrivateKey)
-
     binarioDecodificado = ''
     for componenteChave in reversePrivateKey:
         if componenteChave <= codigo:
@@ -93,9 +91,6 @@ def knapsack(codigo, privateKey):
 
 def decodificarMensagem(mensagem, privateKey, multiplicador, modulo):
     inversoMultiplicativoModular = pow(multiplicador, -1, modulo)
-
-    print(mensagem)
-    print(privateKey)
 
     binarios = []
     for codigo in mensagem:
@@ -124,15 +119,25 @@ def resultados(texto):
     for componente in textoCriptografado:
         componentesTextoCriptografado.append(componente % 256)
 
-    print(bytes(componentesTextoCriptografado).decode("utf8", "replace"))
+    stringTextoCriptografado = bytes(componentesTextoCriptografado).decode(
+        "utf8", "replace"
+    )
 
     textoDescriptografado = decodificarMensagem(
         textoCriptografado, privateKey, multiplicador, modulo
     )
 
-    print(textoDescriptografado)
-
-    return render_template("resultados.html", data=textoDescriptografado)
+    return render_template(
+        "resultados.html",
+        data={
+            "Texto": texto, "Multiplicador": multiplicador, "Módulo": modulo,
+            "Chave Pública": publicKey,
+            "Texto Criptogafado": stringTextoCriptografado,
+            "Chave Privada": privateKey,
+            "Texto Descriptografado": textoDescriptografado
+        }
+        
+    )
 
 
 if __name__ == '__main__':
